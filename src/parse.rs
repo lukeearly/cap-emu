@@ -1,5 +1,6 @@
 use pom::parser::*;
 
+use crate::bytecode::CRegister;
 use crate::bytecode::Instruction;
 use crate::bytecode::Value;
 use crate::bytecode::Condition;
@@ -20,6 +21,17 @@ fn gp_reg<'a>() -> Parser<'a, u8, GpRegister> {
     | seq(b"r5").map(|_|GpRegister::R5)
     | seq(b"r6").map(|_|GpRegister::R6)
     | seq(b"sp").map(|_|GpRegister::SP)
+}
+
+fn c_reg<'a>() -> Parser<'a, u8, CRegister> {
+    seq(b"c0").map(|_|CRegister::C0)
+    | seq(b"c1").map(|_|CRegister::C1)
+    | seq(b"c2").map(|_|CRegister::C2)
+    | seq(b"c3").map(|_|CRegister::C3)
+    | seq(b"c4").map(|_|CRegister::C4)
+    | seq(b"c5").map(|_|CRegister::C5)
+    | seq(b"cc").map(|_|CRegister::CC)
+    | seq(b"dd").map(|_|CRegister::DD)
 }
 
 fn number<'a>() -> Parser<'a, u8, Int> {
@@ -88,9 +100,9 @@ fn instruction<'a>() -> Parser<'a, u8, IrInstruction> {
     | instr!(Xor, xor, gp_reg(), value())
     | instr!(Not, not, gp_reg())
 
-    | instr!(Load, load, gp_reg(), value())
-    | instr!(Store, store, value(), value())
-    | instr!(Jmp, jmp, value())
+    | instr!(Load, load, gp_reg(), c_reg(), value())
+    | instr!(Store, store, c_reg(), value(), value())
+    | instr!(Jmp, jmp, c_reg(), value())
 
     | instr!(Push, push, value())
     | instr!(Pop, pop, gp_reg())

@@ -15,9 +15,9 @@ pub enum Instruction {
     Xor(GpRegister, Value),
     Not(GpRegister),
 
-    Load(GpRegister, Value),
-    Store(Value, Value),
-    Jmp(Value),
+    Load(GpRegister, CRegister, Value),
+    Store(CRegister, Value, Value),
+    Jmp(CRegister, Value),
 
     Push(Value),
     Pop(GpRegister),

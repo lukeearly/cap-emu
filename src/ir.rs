@@ -1,6 +1,6 @@
 use std::{collections::HashMap, fmt::Debug};
 
-use crate::bytecode::{Instruction, Value, Int, GpRegister, Condition};
+use crate::bytecode::{Instruction, Value, Int, GpRegister, Condition, CRegister};
 
 pub struct Env<'a> {
     pub map: &'a HashMap<String, Int>,
@@ -37,6 +37,12 @@ impl Convert<Value> for InterRepValue {
 
 impl Convert<GpRegister> for GpRegister {
     fn convert(&self, _: &Env) -> Result<GpRegister, String> {
+        Ok(*self)
+    }
+}
+
+impl Convert<CRegister> for CRegister {
+    fn convert(&self, _: &Env) -> Result<CRegister, String> {
         Ok(*self)
     }
 }

@@ -24,8 +24,8 @@ fn main() {
         add r0 60
         push r0
         xor r0 r0
-        jmp #rot
-        jmp #loop
+        jmp cc #rot
+        jmp cc #loop
     rot:
         push r1
         push r2
@@ -36,7 +36,7 @@ fn main() {
         pop r1
         pop r4
         pop r0
-        jmp r0
+        jmp cc r0
     "#;
     let ir = parse::parse(source).unwrap();
 

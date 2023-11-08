@@ -274,11 +274,14 @@ impl Machine {
             Xor(a, b) => self.reg[a] ^= self.eval(b),
             Not(a) => self.reg[a] = !self.reg[a],
 
-            Load(a, b) => self.reg[a] = self.memory.load(self.reg[DD], self.eval(b))?,
-            Store(a, b) => self.memory.store(self.reg[DD], self.eval(b), self.eval(a))?,
+            Load(dest, src, offset) =>
+                self.reg[dest] = self.memory.load(self.reg[src], self.eval(offset))?,
+            Store(dest, offset, src) =>
+                self.memory.store(self.reg[dest], self.eval(src), self.eval(src))?,
 
-            Jmp(a) => {
-                self.reg.pc = self.eval(a);
+            Jmp(target, offset) => {
+                self.reg[CC] = self.reg[target];
+                self.reg.pc = self.eval(offset);
                 return Ok(true)
             },
 
