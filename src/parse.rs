@@ -96,6 +96,8 @@ fn instruction<'a>() -> Parser<'a, u8, IrInstruction> {
     | instr!(Pop, pop, gp_reg())
 
     | instr!(Cond, cond, gp_reg(), cond(), value())
+
+    | instr!(Emit, emit, value())
 }
 
 fn statement<'a>() -> Parser<'a, u8, InterRep> {

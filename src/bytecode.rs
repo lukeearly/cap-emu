@@ -24,7 +24,7 @@ pub enum Instruction {
 
     Cond(GpRegister, Condition, Value),
 
-    // Emit(Value),
+    Emit(Value),
 
     // CLoad(GpRegister, CRegister),
     // CStore(Value, CRegister),
@@ -85,13 +85,13 @@ pub enum GpRegister {
 
 #[repr(u8)]
 #[derive(Debug, Clone, Copy)]
-enum CRegister {
+pub enum CRegister {
     C0,
     C1,
     C2,
     C3,
     C4,
     C5,
-    Code,
-    Data
+    CC,
+    DD
 }

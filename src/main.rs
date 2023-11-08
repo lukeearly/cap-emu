@@ -1,6 +1,8 @@
 use std::time;
 use std::thread;
 
+use crate::bytecode::CRegister;
+
 mod bytecode;
 mod capability;
 mod compile;
@@ -10,6 +12,8 @@ mod vm;
 
 fn main() {
     let source = r#"
+        emit 65
+        emit 10
         mov r1 1
         mov r2 16
         mov r3 256
@@ -40,7 +44,7 @@ fn main() {
     println!("{:#?}", bc);
 
     let mut machine = vm::Machine::new();
-    machine.memory.store_slice(0, bc.as_slice()).unwrap();
+    machine.memory.store_slice(machine.reg[CRegister::DD], 0, bc.as_slice()).unwrap();
 
     // clear
     // print!("\x1B[2J\x1B[1;1H");
