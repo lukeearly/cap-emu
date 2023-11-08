@@ -1,0 +1,17 @@
+Add add gp val
+Sub sub gp val
+Mul mul gp val
+Div div gp val
+
+And and gp val
+Or or gp val
+Not not gp
+
+Load load gp val
+Store store val val
+Jmp jmp val
+
+Push push val
+Pop pop gp
+
+Cond cond gp cond val
